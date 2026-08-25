@@ -184,11 +184,27 @@ function Showlayer(icon, layerType) {
 }
 
  map.on("click", function(e) {
-        console.log("Map clicked");
-
+       
+        
         if (map.hasLayer(villageBoundaryLayer)) {
             getFeatureInfo(e, villageBoundaryLayer, "AdminBoundarys:Mancherial");
-            }     
+
+        } else if (map.hasLayer(WardBoundaryLayer)) {
+            getFeatureInfo(e, WardBoundaryLayer, "AdminBoundarys:Ward_Boundary");
+   
+        } else if (map.hasLayer(mandalBoundaryLayer)) {
+            getFeatureInfo(e, mandalBoundaryLayer, "AdminBoundarys:Mandal_Boundary");
+
+        } else if (map.hasLayer(districtBoundaryLayer)) {
+            getFeatureInfo(e, districtBoundaryLayer, "AdminBoundarys:District");
+
+        } else if (map.hasLayer(stateBoundaryLayer)) {
+            getFeatureInfo(e, stateBoundaryLayer, "AdminBoundarys:State_Boundary");
+
+        } else {
+            console.log("No WMS layer is active.");
+        }
+
        
         });
 
@@ -201,9 +217,9 @@ function getFeatureInfo(evt, layer, layerName) {
 
 
     var point = map.latLngToContainerPoint(evt.latlng, map.getZoom());
-    console.log(point);
+   
     var size = map.getSize();
-    console.log(size);
+   
 
     var url = layer._url + L.Util.getParamString({
 
@@ -244,6 +260,14 @@ function getFeatureInfo(evt, layer, layerName) {
 
         var properties = data.features[0].properties;
 
+
+        // if (layerName === "AdminBoundarys:Ward_Boundary") {
+        //     L.popup()
+        //     .setLatLng(evt.latlng)
+        //     .setContent("<b>Ward Name:</b> " + properties.Name)
+        //     .openOn(map);
+        //     }
+
         var html = "<h3>Attributes</h3>";
 
         html += "<table>";
@@ -273,8 +297,6 @@ function getFeatureInfo(evt, layer, layerName) {
     });
 
 }
-
-
 
 
 // ================================
