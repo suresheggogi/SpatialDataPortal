@@ -183,18 +183,6 @@ function Showlayer(icon, layerType) {
     }
 }
 
-// map.on("click", function(e) {
-
-//     if (map.hasLayer(villageBoundaryLayer)) {
-//         console.log("function Calling");
-
-//         getFeatureInfo( e, villageBoundaryLayer, "AdminBoundarys:Mancherial" );
-//     }
-
-// });
-
-
-
  map.on("click", function(e) {
         console.log("Map clicked");
 
@@ -213,7 +201,9 @@ function getFeatureInfo(evt, layer, layerName) {
 
 
     var point = map.latLngToContainerPoint(evt.latlng, map.getZoom());
+    console.log(point);
     var size = map.getSize();
+    console.log(size);
 
     var url = layer._url + L.Util.getParamString({
 
