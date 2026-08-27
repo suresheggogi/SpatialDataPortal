@@ -23,4 +23,9 @@ def LandUseLandCover(request):
 def Transportation(request):
     return render(request, 'Transportation.html')
 
+def Downloads(request):
+    return render(request, 'Downloads.html')
+
+
+
 

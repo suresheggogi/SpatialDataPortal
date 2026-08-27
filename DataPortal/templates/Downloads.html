@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Base Portal</title>
+    <link rel="stylesheet" href="{% static 'css/AdministrativeBoundaries.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="{% static 'css/Downloads.css' %}">
+    
+</head>
+<body>
+    <div class="Accessibility-Toolbar">
+        <a href="#"><i class="fas fa-home"></i></a>
+        <span class="divider"></span>
+        <a href="#">AB</a>
+        <a href="#">A_B</a>
+        <a href="#">A__B</a>
+        <span class="divider"></span>
+        <a href="#">A-</a>
+        <a href="#">A</a>
+        <a href="#">A+</a>
+    </div>
+   
+    <div class="header-title">
+        <div class="Logo-container"><img src="{% static 'images/Telanganalogo.png' %}" alt="" class="Telangana_logo"></div>
+        <h1>GEOSPATIAL DATA PORTAL</h1>       
+    </div>
+
+
+    <div class="Navigationbar-container">
+        <div class="Navigationbar-items">
+            <a href="">Home</a>
+            <a href="">Spatial Data</a>
+            <a href="">Map Viewer </a>
+            <a href="">Master Plan</a>
+            <a href="">Downlaods</a>
+            <a href="">Metadata</a>
+            <a href="">Reports</a>
+            <a href="">Help</a>
+            <a href="">Contacts</a>
+        </div>
+
+    </div>
+   <section class="download-container">
+    <h1><i class="fa-solid fa-cloud-arrow-down"></i> Download Spatial Data</h1>
+    <div class="search-box">
+        <input type="text" placeholder="Search Layers...">
+    </div>
+
+    <div class="cards">
+
+    <div class="card">
+
+    <div class="left">
+
+    <h3>District Boundary</h3>
+
+    <p>
+    <i class="fa-solid fa-layer-group"></i> Administrative Boundary
+    </p>
+
+    <div class="tags">
+    <span>SHP</span>
+    <span>GeoJSON</span>
+    <span>KML</span>
+</div>
+
+<small>Updated : 17 Aug 2026</small>
+
+</div>
+
+<div class="right">
+
+<h2>25 MB</h2>
+
+    <a href="{% static 'downloads/DistrictBoundary.zip' %}" download class="download-btn">
+<i class="fa-solid fa-download"></i> Download
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="left">
+
+<h3>Mandal Boundary</h3>
+
+<p>Administrative Boundary</p>
+
+<div class="tags">
+<span>SHP</span>
+<span>GeoJSON</span>
+<span>KML</span>
+</div>
+
+<small>Updated : 10 Aug 2026</small>
+
+</div>
+
+<div class="right">
+
+<h2>18 MB</h2>
+
+    <a href="{% static 'downloads/MandalBoundary.zip' %}" download class="download-btn">
+<i class="fa-solid fa-download"></i> Download
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="left">
+
+<h3>Road Network</h3>
+
+<p>Transportation Layer</p>
+
+<div class="tags">
+<span>SHP</span>
+<span>GeoJSON</span>
+<span>CSV</span>
+</div>
+
+<small>Updated : 11 Aug 2026</small>
+
+</div>
+
+<div class="right">
+
+<h2>12 MB</h2>
+
+    <a href="{% static 'downloads/RoadNetwork.zip' %}" download class="download-btn">
+<i class="fa-solid fa-download"></i> Download
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+</body>
+</html>

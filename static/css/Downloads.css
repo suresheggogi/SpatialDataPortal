@@ -1,0 +1,171 @@
+/* ==========================
+   DOWNLOAD SECTION
+========================== */
+
+.download-container{
+    max-width:1200px;
+    margin:40px auto;
+    padding:30px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.download-container h1{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:25px;
+    font-size:32px;
+}
+
+.download-container h1 i{
+    margin-right:10px;
+}
+
+/* Search Box */
+
+.search-box{
+    display:flex;
+    justify-content:center;
+    margin-bottom:30px;
+}
+
+.search-box input{
+    width:400px;
+    max-width:100%;
+    padding:12px 18px;
+    border:1px solid #ccc;
+    border-radius:30px;
+    font-size:16px;
+    outline:none;
+    transition:.3s;
+}
+
+.search-box input:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 8px rgba(13,110,253,.25);
+}
+
+/* Card Layout */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+    gap:20px;
+}
+
+/* Individual Card */
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid #e4e4e4;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s ease;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+
+.left{
+    flex:1;
+}
+
+.left h3{
+    margin:0;
+    color:#222;
+    font-size:22px;
+}
+
+.left p{
+    margin:10px 0;
+    color:#666;
+    font-size:15px;
+}
+
+.left p i{
+    color:#0d6efd;
+    margin-right:6px;
+}
+
+.tags{
+    margin:15px 0;
+}
+
+.tags span{
+    display:inline-block;
+    background:#e8f1ff;
+    color:#0d6efd;
+    padding:6px 12px;
+    border-radius:20px;
+    margin-right:8px;
+    margin-bottom:5px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.left small{
+    color:#888;
+}
+
+/* Right Side */
+
+.right{
+    text-align:right;
+    margin-left:20px;
+}
+
+.right h2{
+    color:#198754;
+    margin-bottom:20px;
+    font-size:26px;
+}
+
+.download-btn{
+    display:inline-block;
+    padding:12px 20px;
+    background:#0d6efd;
+    color:#fff;
+    text-decoration:none;
+    border-radius:6px;
+    transition:.3s;
+    font-weight:600;
+}
+
+.download-btn:hover{
+    background:#084db5;
+}
+
+.download-btn i{
+    margin-right:6px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .card{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .right{
+        margin-left:0;
+        margin-top:20px;
+        width:100%;
+        text-align:left;
+    }
+
+    .download-btn{
+        width:100%;
+        text-align:center;
+    }
+
+    .download-container h1{
+        font-size:26px;
+    }
+}
