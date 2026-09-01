@@ -40,7 +40,7 @@ body{
     flex-direction: row;
     align-items: center;
     height: 100px;
-    background: #bf9090;;
+    background-color: #e3eeed;
 }
 
 .Logo-container{
@@ -57,8 +57,9 @@ body{
 }
 .header-title h2{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
-    font-size: 25px;
-    margin-left: 25%;
+    font-size: 35px;
+    margin-left: 35%;
+
 }
 .Grid-container {
     margin: 0;
