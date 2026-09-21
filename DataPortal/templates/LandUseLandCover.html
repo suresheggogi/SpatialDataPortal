@@ -50,7 +50,7 @@
 
                 <div class="layer-tree">
 
-                    <div class="LandUseLandCover" onclick="toggleTree('adminTree',this)">
+<div class="LandUseLandCover" onclick="toggleTree('adminTree',this)">
                         <i class="fa-solid fa-plus arrow"></i>
                         <span class="name">LandUseLandCover</span>
                         <div class="iCons">
@@ -63,48 +63,48 @@
                     <div class="children" id="adminTree">
 
 
-                        <div class="child">
-                            <span>Residential Ares</span>
+                        <div class="child" data-layer="Res">
+                            <span>Residential Areas</span>
                             <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this)"></i>
-                                <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-eye-slash" onclick="Showlayer(this,'Res')"></i>
+                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('Res')" title="Zoom to Layer"></i>
                             </div>
                         </div>
 
-                         <div class="child">
+                         <div class="child" data-layer="Agri">
                             <span>Agriculture Lands</span>
                             <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this)"></i>
-                                <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Agri')"></i>
+                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
                             </div>
                         </div>
-                        <div class="child">
-                            <span>Industial Zones</span>
+                        <div class="child" data-layer="Indu">
+                            <span>Industrial Zones</span>
                             <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this)"></i>
-                                <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Indu')"></i>
+                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
                             </div>
                         </div>
 
-                        <div class="child">
-                            <span>Commerical Zones</span>
+                        <div class="child" data-layer="Comm">
+                            <span>Commercial Zones</span>
                             <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this)"></i>
-                                <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Comm')"></i>
+                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
                             </div>
                         </div>
 
-                         <div class="child">
+                         <div class="child" data-layer="Water">
                             <span>Water Bodies</span>
                             <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this)"></i>
-                                <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Water')"></i>
+                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
                             </div>
 
                         </div>
 
-                     </div>
-                     
+                      </div>
+                      
                     </div>
                     
                 </div>
@@ -118,12 +118,11 @@
             
             <div class="Map-Container">
                 <label><input type="radio" name="mapView" value="street" checked onclick="showOSM()"> Map View</label>
-                <label><input type="radio" name="mapView" value="satellite"onclick="showSatellite()">Satellite Map</label>
-                <label><input type="radio" name="mapView" value="terrain"onclick="showTerrain()">Terrain Map</label>
+                <label><input type="radio" name="mapView" value="satellite" onclick="showSatellite()">Satellite Map</label>
+                <label><input type="radio" name="mapView" value="terrain" onclick="showTerrain()">Terrain Map</label>
             </div>
         </div>
     
     <script src="/static/js/LandUseLandCover.js"></script>
-    <script src="/static/js/AdministrativeBoundaries.js"></script>
 
 </body>

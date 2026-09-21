@@ -1,4 +1,34 @@
 // ================================
+// BASE MAPS
+// ================================
+
+// OpenStreetMap
+var osmLayer = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap contributors'
+    }
+);
+
+// Satellite
+var satelliteLayer = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {   maxZoom: 22,
+        attribution: 'Tiles &copy; Esri'
+    }
+);
+
+// Terrain
+var terrainLayer = L.tileLayer(
+    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 22,
+        attribution: '&copy; OpenTopoMap'
+    }
+);
+
+// ================================
 // TREE MENU
 // ================================
 function toggleTree(id, element) {
@@ -25,7 +55,7 @@ function toggleTree(id, element) {
 // ================================
 // MAP
 // ================================
-var map = L.map('map').setView([17.1, 79.3], 8);
+  var map = L.map('map').setView([17.1, 79.3], 8);
 
 //==============================
 //ZOOMING
@@ -42,38 +72,9 @@ function zoomToLayer(layerName) {
         map.fitBounds(layerBounds[layerName]);
     }
 }
-// ================================
-// BASE MAPS
-// ================================
-
-// OpenStreetMap
-var osmLayer = L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 22,
-        attribution: '&copy; OpenStreetMap contributors'
-    }
-);
-
-// Satellite
-var satelliteLayer = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    {   maxZoom: 22,
-        attribution: 'Tiles &copy; Esri'
-    }
-);
-
-// Terrain
-var terrainLayer = L.tileLayer(
-    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 22,
-        attribution: '&copy; OpenTopoMap'
-    }
-);
 
 // Add default basemap
-osmLayer.addTo(map);
+// osmLayer.addTo(map);
 
 
 // ================================
@@ -109,7 +110,7 @@ var mandalBoundaryLayer = L.tileLayer.wms(
 var villageBoundaryLayer = L.tileLayer.wms(
     "http://104.233.209.179:8080/geoserver/AdminBoundarys/wms",
     {
-        layers: "AdminBoundarys:Mancherial",
+        layers: "	AdminBoundarys:Mancherial",
         format: "image/png",
         transparent: true
     }
