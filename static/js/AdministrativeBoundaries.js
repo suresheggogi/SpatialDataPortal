@@ -6,7 +6,7 @@
 var osmLayer = L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-        maxZoom: 18,
+        maxZoom: 22,
         attribution: '&copy; OpenStreetMap contributors'
     }
 );
@@ -74,7 +74,7 @@ function zoomToLayer(layerName) {
 }
 
 // Add default basemap
-// osmLayer.addTo(map);
+//   osmLayer.addTo(map);
 
 
 // ================================
@@ -261,14 +261,32 @@ function getFeatureInfo(evt, layer, layerName) {
 
         var properties = data.features[0].properties;
 
+        if (layerName === "AdminBoundarys:Ward_Boundary") {
+            L.popup()
+            .setLatLng(evt.latlng)
+            .setContent("<b>Ward Name:</b> " + properties.Name)
+            .openOn(map);
+            }
 
-        // if (layerName === "AdminBoundarys:Ward_Boundary") {
-        //     L.popup()
-        //     .setLatLng(evt.latlng)
-        //     .setContent("<b>Ward Name:</b> " + properties.Name)
-        //     .openOn(map);
-        //     }
+        if (layerName === "AdminBoundarys:Mancherial") {
+            L.popup()
+            .setLatLng(evt.latlng)
+            .setContent("<b>ULB Name:</b> " + properties.Name)
+            .openOn(map);
+            }
 
+
+        if (layerName === "AdminBoundarys:Mandal_Boundary") {
+            L.popup()
+            .setLatLng(evt.latlng)
+            .setContent("<b>Mandal Name:</b> " + properties.MANDAL_NAM)
+            .openOn(map);
+            }
+
+
+
+   
+       
         var html = "<h3>Attributes</h3>";
 
         html += "<table>";
@@ -318,10 +336,7 @@ function showOSM() {
         osmLayer.addTo(map);
     }
 
-    // Keep boundary on top
-    if (map.hasLayer(stateBoundaryLayer)) {
-        stateBoundaryLayer.bringToFront();
-    }
+   
 }
 
 
@@ -339,10 +354,7 @@ function showSatellite() {
         satelliteLayer.addTo(map);
     }
 
-    // Keep boundary on top
-    if (map.hasLayer(stateBoundaryLayer)) {
-        stateBoundaryLayer.bringToFront();
-    }
+    
 }
 
 
@@ -360,9 +372,6 @@ function showTerrain() {
         terrainLayer.addTo(map);
     }
 
-    // Keep boundary on top
-    if (map.hasLayer(stateBoundaryLayer)) {
-        stateBoundaryLayer.bringToFront();
-    }
+ 
 }
 
