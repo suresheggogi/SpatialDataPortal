@@ -39,6 +39,23 @@ var terrainLayer = L.tileLayer(
 );
 
 
+function NoMap() {
+
+    if (map.hasLayer(satelliteLayer)) {
+        map.removeLayer(satelliteLayer);
+    }
+
+    if (map.hasLayer(terrainLayer)) {
+        map.removeLayer(terrainLayer);
+    }
+
+    if (map.hasLayer(osmLayer)) {
+        map.removeLayer(osmLayer);
+    }
+
+}
+    
+
 
 // ============================================================
 // TREE MENU
@@ -126,7 +143,7 @@ var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wm
 
 var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
-        layers: "metpally_ulb_boundary",
+        layers: "SpatialDataPortalDB:metpally_plu_f",
         format: "image/png",
         transparent: true,
         version: "1.1.1"

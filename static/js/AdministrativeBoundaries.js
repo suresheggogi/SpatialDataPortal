@@ -28,6 +28,22 @@ var terrainLayer = L.tileLayer(
     }
 );
 
+
+function NoMap() {
+
+    if (map.hasLayer(satelliteLayer)) {
+        map.removeLayer(satelliteLayer);
+    }
+
+    if (map.hasLayer(terrainLayer)) {
+        map.removeLayer(terrainLayer);
+    }
+
+    if (map.hasLayer(osmLayer)) {
+        map.removeLayer(osmLayer);
+    }
+
+}
 // ================================
 // TREE MENU
 // ================================
