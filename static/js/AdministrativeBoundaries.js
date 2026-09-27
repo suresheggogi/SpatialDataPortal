@@ -77,10 +77,13 @@ function toggleTree(id, element) {
 //ZOOMING
 //=============================
 const layerBounds = {
-    State: L.latLngBounds([12.6, 76.7], [19.9, 84.0]),
-    District: L.latLngBounds([16.0, 78.0], [17.8, 80.2]),
+    // State: L.latLngBounds([12.6, 76.7], [19.9, 84.0]),
+    // District: L.latLngBounds([16.0, 78.0], [17.8, 80.2]),
+
     Village: L.latLngBounds([18.840267, 79.416114], [18.910657, 79.488692]),
-    Mandal: L.latLngBounds([[18.664696, 78.883718], [19.292326, 79.959857]])
+    Mandal: L.latLngBounds([[18.699940795454157, 78.5006330219195], [18.915862175154455, 78.72873390726926]]),
+    ULB: L.latLngBounds([[18.8053719066904, 78.57066741262234],[18.90120153755063, 78.67192986289551]]),
+    Ward: L.latLngBounds([[18.80113105830372, 78.58253171643538],[18.897460702437698, 78.68432010627626]])
 };
 
 function zoomToLayer(layerName) {
@@ -107,6 +110,7 @@ var stateBoundaryLayer = L.tileLayer.wms(
 
 var districtBoundaryLayer = L.tileLayer.wms(
     "http://104.233.209.179:8080/geoserver/AdminBoundarys/wms",
+    
     {
         layers: "AdminBoundarys:District_Boundary",
         format: "image/png",
@@ -114,27 +118,37 @@ var districtBoundaryLayer = L.tileLayer.wms(
     }
 );
 
-var mandalBoundaryLayer = L.tileLayer.wms(
-    "http://104.233.209.179:8080/geoserver/AdminBoundarys/wms",
+var mandalBoundaryLayer = L.tileLayer.wms(    
+    "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
-        layers: "AdminBoundarys:Mandal_Boundary",
+        layers: "SpatialDataPortalDB:mandal_boundary",
         format: "image/png",
         transparent: true
     }
 );
 
 var villageBoundaryLayer = L.tileLayer.wms(
-    "http://104.233.209.179:8080/geoserver/AdminBoundarys/wms",
+    "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
-        layers: "	AdminBoundarys:Mancherial",
+        layers: "SpatialDataPortalDB:village_boundary",
         format: "image/png",
         transparent: true
     }
 );
-var WardBoundaryLayer = L.tileLayer.wms(
-    "http://104.233.209.179:8080/geoserver/AdminBoundarys/wms",
+
+var ULBBoundary = L.tileLayer.wms(
+    "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
-        layers: "AdminBoundarys:Ward_Boundary",
+        layers: "SpatialDataPortalDB:ulb_boundary",
+        format: "image/png",
+        transparent: true
+    }
+);
+
+var WardBoundaryLayer = L.tileLayer.wms(
+    "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+    {
+        layers: "SpatialDataPortalDB:ward_boundry",
         format: "image/png",
         transparent: true
     }
@@ -170,7 +184,11 @@ function Showlayer(icon, layerType) {
             layer = villageBoundaryLayer;
             villageBoundaryLayer.bringToFront();
             break;
-
+    
+        case "ULB Boundary":
+            layer = ULBBoundary;
+            villageBoundaryLayer.bringToFront();
+            break;
 
         case "Ward":
             layer = WardBoundaryLayer;
@@ -204,13 +222,16 @@ function Showlayer(icon, layerType) {
        
         
         if (map.hasLayer(villageBoundaryLayer)) {
-            getFeatureInfo(e, villageBoundaryLayer, "AdminBoundarys:Mancherial");
+            getFeatureInfo(e, villageBoundaryLayer, "SpatialDataPortalDB:village_boundary");
+
+        } else if (map.hasLayer(ULBBoundary)) {
+            getFeatureInfo(e, ULBBoundary, "SpatialDataPortalDB:ulb_boundary");
 
         } else if (map.hasLayer(WardBoundaryLayer)) {
-            getFeatureInfo(e, WardBoundaryLayer, "AdminBoundarys:Ward_Boundary");
+            getFeatureInfo(e, WardBoundaryLayer, "SpatialDataPortalDB:ward_boundry");
    
         } else if (map.hasLayer(mandalBoundaryLayer)) {
-            getFeatureInfo(e, mandalBoundaryLayer, "AdminBoundarys:Mandal_Boundary");
+            getFeatureInfo(e, mandalBoundaryLayer, "	SpatialDataPortalDB:mandal_boundary");
 
         } else if (map.hasLayer(districtBoundaryLayer)) {
             getFeatureInfo(e, districtBoundaryLayer, "AdminBoundarys:District");
@@ -277,22 +298,22 @@ function getFeatureInfo(evt, layer, layerName) {
 
         var properties = data.features[0].properties;
 
-        if (layerName === "AdminBoundarys:Ward_Boundary") {
+        if (layerName === "SpatialDataPortalDB:ward_boundry") {
             L.popup()
             .setLatLng(evt.latlng)
-            .setContent("<b>Ward Name:</b> " + properties.Name)
+            .setContent("<b>Ward Name:</b> " + properties.name)
             .openOn(map);
             }
 
-        if (layerName === "AdminBoundarys:Mancherial") {
+        if (layerName === "SpatialDataPortalDB:village_boundary") {
             L.popup()
             .setLatLng(evt.latlng)
-            .setContent("<b>ULB Name:</b> " + properties.Name)
+            .setContent("<b>ULB Name:</b> " + properties.gp_name)
             .openOn(map);
             }
 
 
-        if (layerName === "AdminBoundarys:Mandal_Boundary") {
+        if (layerName === "SpatialDataPortalDB:mandal_boundary") {
             L.popup()
             .setLatLng(evt.latlng)
             .setContent("<b>Mandal Name:</b> " + properties.MANDAL_NAM)
