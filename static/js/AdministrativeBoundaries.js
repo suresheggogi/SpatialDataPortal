@@ -187,7 +187,7 @@ function Showlayer(icon, layerType) {
     
         case "ULB Boundary":
             layer = ULBBoundary;
-            villageBoundaryLayer.bringToFront();
+            ULBBoundary.bringToFront();
             break;
 
         case "Ward":
