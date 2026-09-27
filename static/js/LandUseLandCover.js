@@ -94,8 +94,7 @@ function toggleTree(id, element) {
 // MAP
 // ============================================================
 
-var map = L.map("map").setView(
-    [17.1, 79.3], 8);
+var map = L.map("map").setView([17.1, 79.3], 8);
 
 
 // ============================================================
@@ -104,10 +103,7 @@ var map = L.map("map").setView(
 
 const layerBounds = {
 
-    Res: L.latLngBounds(
-        [18.81864621, 78.58701965],
-        [18.88863799, 78.65470915]
-    )
+    Res: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915])
 
 };
 
@@ -143,7 +139,7 @@ var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wm
 
 var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
-        layers: "SpatialDataPortalDB:metpally_plu_f",
+        layers: "SpatialDataPortalDB:metpally_plu",
         format: "image/png",
         transparent: true,
         version: "1.1.1"
@@ -240,6 +236,7 @@ function keepWMSOnTop() {
     if (map.hasLayer(ResidentialAreas)) {
 
         ResidentialAreas.bringToFront();
+        
 
     }
 
@@ -320,11 +317,7 @@ map.on("click", function (e) {
 
     if (map.hasLayer(ResidentialAreas)) {
 
-        getFeatureInfo(
-            e,
-            ResidentialAreas,
-            "metpally_ulb_boundary"
-        );
+        getFeatureInfo(e, ResidentialAreas, "SpatialDataPortalDB:metpally_plu");
 
     }
 
@@ -338,11 +331,7 @@ map.on("click", function (e) {
         map.hasLayer(villageBoundaryLayer)
     ) {
 
-        getFeatureInfo(
-            e,
-            villageBoundaryLayer,
-            "metpally_ulb_boundary"
-        );
+        getFeatureInfo( e, villageBoundaryLayer, "metpally_ulb_boundary");
 
     }
 
@@ -356,11 +345,7 @@ map.on("click", function (e) {
         map.hasLayer(WardBoundaryLayer)
     ) {
 
-        getFeatureInfo(
-            e,
-            WardBoundaryLayer,
-            "metpally_ulb_boundary"
-        );
+        getFeatureInfo( e, WardBoundaryLayer, "metpally_ulb_boundary");
 
     }
 
@@ -374,11 +359,7 @@ map.on("click", function (e) {
         map.hasLayer(mandalBoundaryLayer)
     ) {
 
-        getFeatureInfo(
-            e,
-            mandalBoundaryLayer,
-            "AdminBoundarys:Mandal_Boundary"
-        );
+        getFeatureInfo( e, mandalBoundaryLayer, "SpatialDataPortalDB:metpally_plu");
 
     }
 
@@ -410,11 +391,7 @@ map.on("click", function (e) {
         map.hasLayer(stateBoundaryLayer)
     ) {
 
-        getFeatureInfo(
-            e,
-            stateBoundaryLayer,
-            "AdminBoundarys:State_Boundary"
-        );
+        getFeatureInfo( e, stateBoundaryLayer, "AdminBoundarys:State_Boundary");
 
     }
 
@@ -425,9 +402,7 @@ map.on("click", function (e) {
 
     else {
 
-        console.log(
-            "No WMS layer is active."
-        );
+        console.log( "No WMS layer is active.");
 
     }
 
@@ -439,37 +414,29 @@ map.on("click", function (e) {
 // GET FEATURE INFO
 // ============================================================
 
-function getFeatureInfo(
-    evt,
-    layer,
-    layerName
-) {
+function getFeatureInfo(evt, layer, layerName)
+ {
 
 
     // ----------------------------------------
     // CLICK POINT
     // ----------------------------------------
 
-    var point =
-        map.latLngToContainerPoint(
-            evt.latlng
-        );
+    var point = map.latLngToContainerPoint(evt.latlng);
 
 
     // ----------------------------------------
     // MAP SIZE
     // ----------------------------------------
 
-    var size =
-        map.getSize();
+    var size = map.getSize();
 
 
     // ----------------------------------------
     // MAP BOUNDARY
     // ----------------------------------------
 
-    var bbox =
-        map.getBounds().toBBoxString();
+    var bbox = map.getBounds().toBBoxString();
 
 
     // ----------------------------------------
@@ -504,8 +471,7 @@ function getFeatureInfo(
 
             query_layers: layerName,
 
-            info_format:
-                "application/json",
+            info_format: "application/json",
 
             feature_count: 1,
 
@@ -525,10 +491,7 @@ function getFeatureInfo(
     // DEBUG URL
     // ----------------------------------------
 
-    console.log(
-        "GetFeatureInfo URL:",
-        url
-    );
+    console.log("GetFeatureInfo URL:", url);
 
 
 
@@ -542,10 +505,7 @@ function getFeatureInfo(
 
             if (!response.ok) {
 
-                throw new Error(
-                    "HTTP Error: " +
-                    response.status
-                );
+                throw new Error("HTTP Error: " + response.status);
 
             }
 
@@ -594,8 +554,7 @@ function getFeatureInfo(
             // FIRST FEATURE
             // ----------------------------------------
 
-            var properties =
-                data.features[0].properties;
+            var properties =  data.features[0].properties;
 
 
 
@@ -603,12 +562,10 @@ function getFeatureInfo(
             // CREATE TABLE
             // ----------------------------------------
 
-            var html =
-                "<h3>Attributes</h3>";
+            var html = "<h3>Attributes</h3>";
 
 
-            html +=
-                "<table>";
+            html +=  "<table>";
 
 
             html +=
@@ -878,9 +835,7 @@ function showTerrain() {
 // AUTOMATICALLY KEEP WMS ABOVE BASEMAP AFTER MAP CHANGES
 // ============================================================
 
-map.on(
-    "layeradd",
-    function () {
+map.on("layeradd", function () {
 
         keepWMSOnTop();
 
