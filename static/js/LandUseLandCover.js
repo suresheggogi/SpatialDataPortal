@@ -127,7 +127,7 @@ function zoomToLayer(layerName) {
 
 // ============================================================
 // GEOSERVER WMS URL
-// ============================================================
+
 
 var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms";
 
