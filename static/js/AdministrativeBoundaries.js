@@ -1,49 +1,4 @@
-// ================================
-// BASE MAPS
-// ================================
 
-// OpenStreetMap
-var osmLayer = L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 22,
-        attribution: '&copy; OpenStreetMap contributors'
-    }
-);
-
-// Satellite
-var satelliteLayer = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    {   maxZoom: 22,
-        attribution: 'Tiles &copy; Esri'
-    }
-);
-
-// Terrain
-var terrainLayer = L.tileLayer(
-    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 22,
-        attribution: '&copy; OpenTopoMap'
-    }
-);
-
-
-function NoMap() {
-
-    if (map.hasLayer(satelliteLayer)) {
-        map.removeLayer(satelliteLayer);
-    }
-
-    if (map.hasLayer(terrainLayer)) {
-        map.removeLayer(terrainLayer);
-    }
-
-    if (map.hasLayer(osmLayer)) {
-        map.removeLayer(osmLayer);
-    }
-
-}
 // ================================
 // TREE MENU
 // ================================
@@ -77,11 +32,10 @@ function toggleTree(id, element) {
 //ZOOMING
 //=============================
 const layerBounds = {
-    // State: L.latLngBounds([12.6, 76.7], [19.9, 84.0]),
-    // District: L.latLngBounds([16.0, 78.0], [17.8, 80.2]),
-
-    Village: L.latLngBounds([18.840267, 79.416114], [18.910657, 79.488692]),
+    State: L.latLngBounds([[18.699940795454157, 78.5006330219195], [18.915862175154455, 78.72873390726926]]),
+    District: L.latLngBounds([[18.699940795454157, 78.5006330219195], [18.915862175154455, 78.72873390726926]]),
     Mandal: L.latLngBounds([[18.699940795454157, 78.5006330219195], [18.915862175154455, 78.72873390726926]]),
+    Village: L.latLngBounds([[18.699940795454157, 78.5006330219195], [18.915862175154455, 78.72873390726926]]),
     ULB: L.latLngBounds([[18.8053719066904, 78.57066741262234],[18.90120153755063, 78.67192986289551]]),
     Ward: L.latLngBounds([[18.80113105830372, 78.58253171643538],[18.897460702437698, 78.68432010627626]])
 };
@@ -185,7 +139,7 @@ function Showlayer(icon, layerType) {
             villageBoundaryLayer.bringToFront();
             break;
     
-        case "ULB Boundary":
+        case "ULBBoundary":
             layer = ULBBoundary;
             ULBBoundary.bringToFront();
             break;
@@ -305,14 +259,6 @@ function getFeatureInfo(evt, layer, layerName) {
             .openOn(map);
             }
 
-        if (layerName === "SpatialDataPortalDB:village_boundary") {
-            L.popup()
-            .setLatLng(evt.latlng)
-            .setContent("<b>ULB Name:</b> " + properties.gp_name)
-            .openOn(map);
-            }
-
-
         if (layerName === "SpatialDataPortalDB:mandal_boundary") {
             L.popup()
             .setLatLng(evt.latlng)
@@ -355,6 +301,33 @@ function getFeatureInfo(evt, layer, layerName) {
 }
 
 
+// OpenStreetMap
+var osmLayer = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 22,
+        attribution: '&copy; OpenStreetMap contributors'
+    }
+);
+
+// Satellite
+var satelliteLayer = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {   maxZoom: 22,
+        attribution: 'Tiles &copy; Esri'
+    }
+);
+
+// Terrain
+var terrainLayer = L.tileLayer(
+    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 22,
+        attribution: '&copy; OpenTopoMap'
+    }
+);
+
+
 // ================================
 // BASEMAP FUNCTIONS
 // ================================
@@ -375,7 +348,6 @@ function showOSM() {
 
    
 }
-
 
 function showSatellite() {
 
@@ -411,4 +383,39 @@ function showTerrain() {
 
  
 }
+function NoMap() {
 
+    if (map.hasLayer(satelliteLayer)) {
+        map.removeLayer(satelliteLayer);
+    }
+
+    if (map.hasLayer(terrainLayer)) {
+        map.removeLayer(terrainLayer);
+    }
+
+    if (map.hasLayer(osmLayer)) {
+        map.removeLayer(osmLayer);
+    }
+
+}
+
+// ================================
+// INITIALIZE DEFAULT LAYER STATE
+// ================================
+document.addEventListener("DOMContentLoaded", function() {
+    ULBBoundary.addTo(map);
+    ULBBoundary.bringToFront();
+    zoomToLayer('ULB');
+
+    const ulbIcon = document.querySelector('[onclick*="ULBBoundary"]') || document.getElementById("ulb-icon");
+    if (ulbIcon) {
+        ulbIcon.classList.add("fa-eye");
+        ulbIcon.classList.remove("fa-eye-slash");
+    }
+
+    const otherIcons = document.querySelectorAll('[onclick*="Showlayer"]:not([onclick*="ULBBoundary"])');
+    otherIcons.forEach(icon => {
+        icon.classList.add("fa-eye-slash");
+        icon.classList.remove("fa-eye");
+    });
+});
