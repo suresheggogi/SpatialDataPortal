@@ -322,16 +322,11 @@ input[type="radio"] {
     }
 
 
-
-
-
-
-
-
-
-
-
 #map{
     width:100%;
      min-height: 85vh;
+}
+#map,
+.leaflet-container {
+    background: #ffffff !important;
 }

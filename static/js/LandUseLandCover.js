@@ -94,7 +94,7 @@ function toggleTree(id, element) {
 // MAP
 // ============================================================
 
-var map = L.map("map").setView([17.1, 79.3], 8);
+ var map = L.map("map").setView([17.1, 79.3], 8);
 
 
 // ============================================================
@@ -318,68 +318,69 @@ map.on("click", function (e) {
     if (map.hasLayer(ResidentialAreas)) {
 
         getFeatureInfo(e, ResidentialAreas, "SpatialDataPortalDB:metpally_plu");
+        
 
     }
 
 
-    // ----------------------------------------
-    // VILLAGE
-    // ----------------------------------------
+    // // ----------------------------------------
+    // // VILLAGE
+    // // ----------------------------------------
 
-    else if (
-        typeof villageBoundaryLayer !== "undefined" &&
-        map.hasLayer(villageBoundaryLayer)
-    ) {
+    // else if (
+    //     typeof villageBoundaryLayer !== "undefined" &&
+    //     map.hasLayer(villageBoundaryLayer)
+    // ) {
 
-        getFeatureInfo( e, villageBoundaryLayer, "metpally_ulb_boundary");
+    //     getFeatureInfo( e, villageBoundaryLayer, "metpally_ulb_boundary");
 
-    }
-
-
-    // ----------------------------------------
-    // WARD
-    // ----------------------------------------
-
-    else if (
-        typeof WardBoundaryLayer !== "undefined" &&
-        map.hasLayer(WardBoundaryLayer)
-    ) {
-
-        getFeatureInfo( e, WardBoundaryLayer, "metpally_ulb_boundary");
-
-    }
+    // }
 
 
-    // ----------------------------------------
-    // MANDAL
-    // ----------------------------------------
+    // // ----------------------------------------
+    // // WARD
+    // // ----------------------------------------
 
-    else if (
-        typeof mandalBoundaryLayer !== "undefined" &&
-        map.hasLayer(mandalBoundaryLayer)
-    ) {
+    // else if (
+    //     typeof WardBoundaryLayer !== "undefined" &&
+    //     map.hasLayer(WardBoundaryLayer)
+    // ) {
 
-        getFeatureInfo( e, mandalBoundaryLayer, "SpatialDataPortalDB:metpally_plu");
+    //     getFeatureInfo( e, WardBoundaryLayer, "metpally_ulb_boundary");
 
-    }
+    // }
 
 
-    // ----------------------------------------
-    // DISTRICT
-    // ----------------------------------------
+    // // ----------------------------------------
+    // // MANDAL
+    // // ----------------------------------------
 
-    else if (
-        typeof districtBoundaryLayer !== "undefined" &&
-        map.hasLayer(districtBoundaryLayer)
-    ) {
+    // else if (
+    //     typeof mandalBoundaryLayer !== "undefined" &&
+    //     map.hasLayer(mandalBoundaryLayer)
+    // ) {
 
-        getFeatureInfo(
-            e,
-            districtBoundaryLayer,
-            "AdminBoundarys:District_Boundary"
-        );
+    //     getFeatureInfo( e, mandalBoundaryLayer, "SpatialDataPortalDB:metpally_plu");
 
-    }
+    // }
+
+
+    // // ----------------------------------------
+    // // DISTRICT
+    // // ----------------------------------------
+
+    // else if (
+    //     typeof districtBoundaryLayer !== "undefined" &&
+    //     map.hasLayer(districtBoundaryLayer)
+    // ) {
+
+    //     getFeatureInfo(
+    //         e,
+    //         districtBoundaryLayer,
+    //         "AdminBoundarys:District_Boundary"
+    //     );
+
+    // }
 
 
     // ----------------------------------------
@@ -413,244 +414,97 @@ map.on("click", function (e) {
 // ============================================================
 // GET FEATURE INFO
 // ============================================================
-
-function getFeatureInfo(evt, layer, layerName)
- {
+function getFeatureInfo(evt, layer, layerName) {
 
 
-    // ----------------------------------------
-    // CLICK POINT
-    // ----------------------------------------
+    var attrTable = document.getElementById("attr-table1");
 
-    var point = map.latLngToContainerPoint(evt.latlng);
+    if (!attrTable) {
 
+        return;
 
-    // ----------------------------------------
-    // MAP SIZE
-    // ----------------------------------------
+    }
 
+    var point = map.latLngToContainerPoint(evt.latlng, map.getZoom());
+   
     var size = map.getSize();
+   
 
+    var url = layer._url + L.Util.getParamString({
 
-    // ----------------------------------------
-    // MAP BOUNDARY
-    // ----------------------------------------
+        request: "GetFeatureInfo",
+        service: "WMS",
+        srs: "EPSG:4326",
+        styles: "",
+        version: "1.1.1",
+        transparent: true,
+        format: "image/png",
 
-    var bbox = map.getBounds().toBBoxString();
+        bbox: map.getBounds().toBBoxString(),
+        width: size.x,
+        height: size.y,
 
+        layers: layerName,
+        query_layers: layerName,
 
-    // ----------------------------------------
-    // GET FEATURE INFO URL
-    // ----------------------------------------
+        info_format: "application/json",
+        feature_count: 1,
 
-    var url =
-        layer._url +
-        L.Util.getParamString({
+        x: Math.round(point.x),
+        y: Math.round(point.y)
 
-            request: "GetFeatureInfo",
-
-            service: "WMS",
-
-            version: "1.1.1",
-
-            srs: "EPSG:32644",
-
-            styles: "",
-
-            transparent: true,
-
-            format: "image/png",
-
-            bbox: bbox,
-
-            width: size.x,
-
-            height: size.y,
-
-            layers: layerName,
-
-            query_layers: layerName,
-
-            info_format: "application/json",
-
-            feature_count: 1,
-
-            x: Math.round(
-                point.x
-            ),
-
-            y: Math.round(
-                point.y
-            )
-
-        });
-
-
-
-    // ----------------------------------------
-    // DEBUG URL
-    // ----------------------------------------
-
-    console.log("GetFeatureInfo URL:", url);
-
-
-
-    // ----------------------------------------
-    // FETCH DATA
-    // ----------------------------------------
-
+    });
+    
     fetch(url)
+    .then(response => response.json())
+    .then(data => {
 
-        .then(function (response) {
+        if (data.features.length === 0) {
 
-            if (!response.ok) {
+            attrTable.innerHTML =
+                "<h3>Attributes</h3><p>No feature selected.</p>";
 
-                throw new Error("HTTP Error: " + response.status);
+            return;
+        }
 
+        var properties = data.features[0].properties;
+
+        if (layerName === "SpatialDataPortalDB:metpally_plu") {
+            L.popup()
+            .setLatLng(evt.latlng)
+            .setContent("<b>Class:</b> " + properties.class_m)
+            .openOn(map);
             }
 
-            return response.json();
+         
+       
+        var html = "<h3>Attributes</h3>";
 
-        })
+        html += "<table>";
+        html += "<tr><th>Field</th><th>Value</th></tr>";
 
+        for (var key in properties) {
 
-        // ----------------------------------------
-        // PROCESS JSON
-        // ----------------------------------------
+            html += "<tr>";
+            html += "<td>" + key + "</td>";
+            html += "<td>" + properties[key] + "</td>";
+            html += "</tr>";
 
-        .then(function (data) {
+        }
 
+        html += "</table>";
 
-            console.log(
-                "GetFeatureInfo Response:",
-                data
-            );
+        attrTable.innerHTML = html;
 
+    })
+    .catch(function(error){
 
-            // ----------------------------------------
-            // NO FEATURE
-            // ----------------------------------------
+        console.log(error);
 
-            if (
-                !data.features ||
-                data.features.length === 0
-            ) {
+        attrTable.innerHTML =
+            "<h3>Attributes</h3><p>Error loading attributes.</p>";
 
-                document.getElementById(
-                    "attr-table1"
-                ).innerHTML =
-
-                    "<h3>Attributes</h3>" +
-
-                    "<p>No feature selected.</p>";
-
-                return;
-
-            }
-
-
-
-            // ----------------------------------------
-            // FIRST FEATURE
-            // ----------------------------------------
-
-            var properties =  data.features[0].properties;
-
-
-
-            // ----------------------------------------
-            // CREATE TABLE
-            // ----------------------------------------
-
-            var html = "<h3>Attributes</h3>";
-
-
-            html +=  "<table>";
-
-
-            html +=
-                "<tr>" +
-                "<th>Field</th>" +
-                "<th>Value</th>" +
-                "</tr>";
-
-
-
-            // ----------------------------------------
-            // ADD ATTRIBUTES
-            // ----------------------------------------
-
-            for (
-                var key in properties
-            ) {
-
-
-                html +=
-                    "<tr>";
-
-
-                html +=
-                    "<td>" +
-                    key +
-                    "</td>";
-
-
-                html +=
-                    "<td>" +
-                    (
-                        properties[key] !== null
-                            ? properties[key]
-                            : ""
-                    ) +
-                    "</td>";
-
-
-                html +=
-                    "</tr>";
-
-            }
-
-
-
-            html +=
-                "</table>";
-
-
-
-            // ----------------------------------------
-            // DISPLAY TABLE
-            // ----------------------------------------
-
-            document.getElementById(
-                "attr-table1"
-            ).innerHTML = html;
-
-
-        })
-
-
-        // ----------------------------------------
-        // ERROR
-        // ----------------------------------------
-
-        .catch(function (error) {
-
-
-            console.error(
-                "GetFeatureInfo Error:",
-                error
-            );
-
-
-            document.getElementById(
-                "attr-table1"
-            ).innerHTML =
-
-                "<h3>Attributes</h3>" +
-
-                "<p>Error loading attributes.</p>";
-
-        });
+    });
 
 }
 

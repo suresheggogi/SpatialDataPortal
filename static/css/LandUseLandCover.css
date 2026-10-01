@@ -81,7 +81,7 @@ body{
 .Navigationbar-container {
     width: 100%;
     height: 70px;
-    background: #1a1822;
+    /* background: #1a1822; */
     position: fixed;
     top: 146px;  
     left: 0;
@@ -94,7 +94,7 @@ body{
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
-    background:#d3d2d7;
+    background:#3a3356;
     font-size: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 10px;
@@ -235,9 +235,11 @@ body{
 }
 
 .Map-Content{
-    width: 300px;
+    width: 350px;
     min-height: 85vh;
     border: 1px solid blue;
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 .Map-Container{
     padding: 5px;
@@ -266,5 +268,57 @@ input[type="radio"] {
 }
 #map{
     width:100%;
-     min-height: 85vh;
+    min-height: 90vh;
+}
+
+.Attribute-Container{
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    max-height: calc(85vh - 170px);
+    overflow: hidden;
+    background: #ffffff;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.attribute-table{
+    width: 100%;
+    max-height: calc(85vh - 190px);
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border: 1px solid #391fb8;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.attribute-table h3{
+    margin: 0 0 10px 0;
+    color: #391fb8;
+    font-size: 18px;
+}
+
+.attribute-table table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.attribute-table th{
+    background-color: #5a43c8;
+    color: #fff;
+    padding: 6px 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    word-break: break-word;
+}
+
+.attribute-table td{
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    word-break: break-word;
+    vertical-align: top;
+}
+#map,.leaflet-container {
+    background: #ffffff !important;
 }
