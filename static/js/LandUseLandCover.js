@@ -7,7 +7,7 @@
 var osmLayer = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-        maxZoom: 18,
+        // maxZoom: 18,
         attribution: "&copy; OpenStreetMap contributors"
     }
 );
@@ -94,7 +94,7 @@ function toggleTree(id, element) {
 // MAP
 // ============================================================
 
- var map = L.map("map").setView([17.1, 79.3], 8);
+ var map = L.map("map").setView([18.850, 78.6245], 14); 
 
 
 // ============================================================
@@ -193,13 +193,13 @@ function Showlayer(icon, layerType) {
 
         // Zoom to layer
 
-        if (layerBounds[layerType]) {
+        // if (layerBounds[layerType]) {
 
-            map.fitBounds(
-                layerBounds[layerType]
-            );
+        //     map.fitBounds(
+        //         layerBounds[layerType]
+        //     );
 
-        }
+        // }
 
     }
 
