@@ -20,7 +20,7 @@ var osmLayer = L.tileLayer(
 var satelliteLayer = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
-        maxZoom: 22,
+        maxZoom: 25,
         attribution: "Tiles &copy; Esri"
     }
 );
@@ -33,7 +33,7 @@ var satelliteLayer = L.tileLayer(
 var terrainLayer = L.tileLayer(
     "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
     {
-        maxZoom: 22,
+        maxZoom: 25,
         attribution: "&copy; OpenTopoMap"
     }
 );
@@ -142,7 +142,8 @@ var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/Sp
         layers: "SpatialDataPortalDB:metpally_plu",
         format: "image/png",
         transparent: true,
-        version: "1.1.1"
+        version: "1.1.1",
+        maxZoom: 25
 
     }
 );
