@@ -133,7 +133,7 @@ body{
     align-items: center;
     justify-content: center;
     width: 400px;
-    min-height: 85vh;
+    min-height: 70vh;
     border: 1px solid rgb(67, 65, 69);
 }
 
@@ -237,7 +237,7 @@ body{
 
 .Map-Content{
     width: 350px;
-    min-height: 85vh;
+    min-height: 60vh;
     border: 1px solid blue;
     box-sizing: border-box;
     flex-shrink: 0;
@@ -269,7 +269,7 @@ input[type="radio"] {
 }
 #map{
     width:100%;
-    min-height: 90vh;
+    min-height: 80vh;
 }
 
 .Attribute-Container{
@@ -321,5 +321,5 @@ input[type="radio"] {
     vertical-align: top;
 }
 #map,.leaflet-container {
-    background: #ffffff !important;
+    background: #ffffff ;
 }
