@@ -96,12 +96,15 @@ function toggleTree(id, element) {
 
  var map = L.map("map").setView([18.850, 78.6245], 14); 
 
+// Default basemap: none
+NoMap();
+
 
 // ============================================================
 // LAYER BOUNDS
 // ============================================================
 
-const layerBounds = {
+const MasterPlanboundary = {
 
     Res: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915])
 
@@ -113,10 +116,10 @@ const layerBounds = {
 
 function zoomToLayer(layerName) {
 
-    if (layerBounds[layerName]) {
+    if (MasterPlanboundary[layerName]) {
 
         map.fitBounds(
-            layerBounds[layerName]
+            MasterPlanboundary[layerName]
         );
 
     }
@@ -137,10 +140,9 @@ var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wm
 // METPALLY ULB BOUNDARY WMS
 // ============================================================
 
-var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+var MasterPlan = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
         layers: "SpatialDataPortalDB:metpally_plu",
-        CQL_FILTER: "class_m IN ('Residential','Commercial')",
         format: "image/png",
         transparent: true,
         version: "1.1.1",
@@ -149,8 +151,8 @@ var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/Sp
     }
 );
 // Add to map by default
-ResidentialAreas.addTo(map);
-ResidentialAreas.bringToFront();
+MasterPlan.addTo(map);
+MasterPlan.bringToFront();
 
 
 
@@ -167,9 +169,9 @@ function Showlayer(icon, layerType) {
 
     switch (layerType) {
 
-        case "Res":
+        case "MasterPlan":
 
-            layer = ResidentialAreas;
+            layer = MasterPlan;
 
             break;
 
@@ -183,42 +185,39 @@ function Showlayer(icon, layerType) {
 
 
     // ----------------------------------------
-    // SHOW LAYER
+    // TOGGLE LAYER
     // ----------------------------------------
 
-    if (!map.hasLayer(layer)) {
+    if (map.hasLayer(layer)) {
+
+        map.removeLayer(layer);
+
+    }
+
+    else {
 
         layer.addTo(map);
         layer.bringToFront();
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-
-        // Zoom to layer
-
-        // if (layerBounds[layerType]) {
-
-        //     map.fitBounds(
-        //         layerBounds[layerType]
-        //     );
-
-        // }
 
     }
 
 
     // ----------------------------------------
-    // HIDE LAYER
+    // SYNC EYE ICON WITH LAYER STATE
+    // Eye icon is ON when the layer is visible
     // ----------------------------------------
 
-    else {
-
-        map.removeLayer(layer);
-
-
-        // Change eye icon
+    if (map.hasLayer(layer)) {
 
         icon.classList.remove("fa-eye-slash");
         icon.classList.add("fa-eye");
+
+    }
+
+    else {
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
 
     }
 
@@ -235,72 +234,12 @@ function keepWMSOnTop() {
 
     // Metpally ULB
 
-    if (map.hasLayer(ResidentialAreas)) {
+    if (map.hasLayer(MasterPlan)) {
 
-        ResidentialAreas.bringToFront();
+        MasterPlan.bringToFront();
         
 
     }
-
-
-    // // State
-
-    // if (
-    //     typeof stateBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(stateBoundaryLayer)
-    // ) {
-
-    //     stateBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // District
-
-    // if (
-    //     typeof districtBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(districtBoundaryLayer)
-    // ) {
-
-    //     districtBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Mandal
-
-    // if (
-    //     typeof mandalBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(mandalBoundaryLayer)
-    // ) {
-
-    //     mandalBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Village
-
-    // if (
-    //     typeof villageBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(villageBoundaryLayer)
-    // ) {
-
-    //     villageBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Ward
-
-    // if (
-    //     typeof WardBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(WardBoundaryLayer)
-    // ) {
-
-    //     WardBoundaryLayer.bringToFront();
-
-    // }
 
 }
 
@@ -317,86 +256,27 @@ map.on("click", function (e) {
     // METPALLY ULB
     // ----------------------------------------
 
-    if (map.hasLayer(ResidentialAreas)) {
+    if (map.hasLayer(MasterPlan)) {
 
-        getFeatureInfo(e, ResidentialAreas, "SpatialDataPortalDB:metpally_plu");
+        getFeatureInfo(e, MasterPlan, "SpatialDataPortalDB:metpally_plu");
         
 
     }
 
-
-    // // ----------------------------------------
-    // // VILLAGE
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof villageBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(villageBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, villageBoundaryLayer, "metpally_ulb_boundary");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // WARD
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof WardBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(WardBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, WardBoundaryLayer, "metpally_ulb_boundary");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // MANDAL
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof mandalBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(mandalBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, mandalBoundaryLayer, "SpatialDataPortalDB:metpally_plu");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // DISTRICT
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof districtBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(districtBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo(
-    //         e,
-    //         districtBoundaryLayer,
-    //         "AdminBoundarys:District_Boundary"
-    //     );
-
-    // }
 
 
     // ----------------------------------------
     // STATE
     // ----------------------------------------
 
-    else if (
-        typeof stateBoundaryLayer !== "undefined" &&
-        map.hasLayer(stateBoundaryLayer)
-    ) {
+    // else if (
+    //     typeof stateBoundaryLayer !== "undefined" &&
+    //     map.hasLayer(stateBoundaryLayer)
+    // ) {
 
-        getFeatureInfo( e, stateBoundaryLayer, "AdminBoundarys:State_Boundary");
+    //     getFeatureInfo( e, stateBoundaryLayer, "AdminBoundarys:State_Boundary");
 
-    }
+    // }
 
 
     // ----------------------------------------
@@ -441,16 +321,13 @@ function getFeatureInfo(evt, layer, layerName) {
         version: "1.1.1",
         transparent: true,
         format: "image/png",
-
         bbox: map.getBounds().toBBoxString(),
         width: size.x,
         height: size.y,
 
         layers: layerName,
         query_layers: layerName,
-
-        CQL_FILTER: "class_m='Residential'",
-
+        // CQL_FILTER: "class_m='Residential'",
         info_format: "application/json",
         feature_count: 1,
 

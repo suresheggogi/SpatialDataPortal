@@ -81,7 +81,6 @@ body{
 .Navigationbar-container {
     width: 100%;
     height: 70px;
-    /* background: #1a1822; */
     position: fixed;
     top: 146px;  
     left: 0;
@@ -149,6 +148,7 @@ body{
 .BaseMaps,
 .LandInformation,
 .Infrastructure,
+.MasterPlan,
 .child{
     display:flex;
     align-items:center;
@@ -165,7 +165,8 @@ body{
 .LandUseLandCover,
 .BaseMaps,
 .LandInformation,
-.Infrastructure{
+.Infrastructure,
+.MasterPlan{
     padding: 20px;
     border-radius: 5px;
     cursor:pointer;

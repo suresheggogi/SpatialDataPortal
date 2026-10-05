@@ -26,6 +26,7 @@ def Transportation(request):
 def Downloads(request):
     return render(request, 'Downloads.html')
 
-
+def MasterPlan(request):
+    return render(request, 'MasterPlan.html')
 
 
