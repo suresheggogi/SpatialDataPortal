@@ -140,7 +140,7 @@ var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wm
 var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
         layers: "SpatialDataPortalDB:metpally_plu",
-        CQL_FILTER: "class_m IN ('Residential','Commercial')",
+        CQL_FILTER: "class_m IN ('Residential')",
         format: "image/png",
         transparent: true,
         version: "1.1.1",
@@ -151,6 +151,28 @@ var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/Sp
 // Add to map by default
 ResidentialAreas.addTo(map);
 ResidentialAreas.bringToFront();
+
+var CommercialZones = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+    {
+        layers: "SpatialDataPortalDB:metpally_plu",
+        CQL_FILTER: "class_m IN ('Commercial')",
+        format: "image/png",
+        transparent: true,
+        version: "1.1.1",
+        maxZoom: 25
+
+    }
+);
+CommercialZones.addTo(map);
+CommercialZones.bringToFront();
+
+
+
+
+
+
+
+
 
 
 
@@ -172,7 +194,11 @@ function Showlayer(icon, layerType) {
             layer = ResidentialAreas;
 
             break;
+        case "Comm":
 
+            layer = CommercialZones;
+
+            break;
 
         default:
 
@@ -183,15 +209,15 @@ function Showlayer(icon, layerType) {
 
 
     // ----------------------------------------
-    // SHOW LAYER
+    // SHOW LAYER (currently hidden)
     // ----------------------------------------
 
     if (!map.hasLayer(layer)) {
 
         layer.addTo(map);
         layer.bringToFront();
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
 
         // Zoom to layer
 
@@ -207,7 +233,7 @@ function Showlayer(icon, layerType) {
 
 
     // ----------------------------------------
-    // HIDE LAYER
+    // HIDE LAYER (currently visible)
     // ----------------------------------------
 
     else {
@@ -217,8 +243,8 @@ function Showlayer(icon, layerType) {
 
         // Change eye icon
 
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
 
     }
 
@@ -241,6 +267,15 @@ function keepWMSOnTop() {
         
 
     }
+    
+    if (map.hasLayer(CommercialZones)) {
+
+        CommercialZones.bringToFront();
+        
+
+    }
+
+
 
 
     // // State
@@ -449,7 +484,8 @@ function getFeatureInfo(evt, layer, layerName) {
         layers: layerName,
         query_layers: layerName,
 
-        CQL_FILTER: "class_m='Residential'",
+        CQL_FILTER: "class_m='Residential' OR class_m='Commercial'",
+
 
         info_format: "application/json",
         feature_count: 1,
