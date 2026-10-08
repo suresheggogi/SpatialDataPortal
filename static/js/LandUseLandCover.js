@@ -1,8 +1,6 @@
 
 
-// // ================================
 // // OPEN STREET MAP
-// // ================================
 
 var osmLayer = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -13,9 +11,9 @@ var osmLayer = L.tileLayer(
 );
 
 
-// // ================================
+
 // // ESRI SATELLITE
-// // ================================
+
 
 var satelliteLayer = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -26,9 +24,9 @@ var satelliteLayer = L.tileLayer(
 );
 
 
-// // ================================
+
 // // TERRAIN
-// // ================================
+
 
 var terrainLayer = L.tileLayer(
     "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
@@ -57,9 +55,8 @@ function NoMap() {
     
 
 
-// ============================================================
 // TREE MENU
-// ============================================================
+
 
 function toggleTree(id, element) {
 
@@ -103,7 +100,11 @@ function toggleTree(id, element) {
 
 const layerBounds = {
 
-    Res: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915])
+    Res: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915]),
+    Agri: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915]),
+    Indu: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915]),
+    Comm: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915]),
+    Water: L.latLngBounds([18.81864621, 78.58701965], [18.88863799, 78.65470915])
 
 };
 
@@ -125,7 +126,7 @@ function zoomToLayer(layerName) {
 
 
 
-// ============================================================
+
 // GEOSERVER WMS URL
 
 
@@ -134,7 +135,7 @@ var geoserverWMS = "http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wm
 
 
 // ============================================================
-// METPALLY ULB BOUNDARY WMS
+// Residential Area
 // ============================================================
 
 var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
@@ -152,6 +153,10 @@ var ResidentialAreas = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/Sp
 ResidentialAreas.addTo(map);
 ResidentialAreas.bringToFront();
 
+// ============================================================
+// Commercial Area
+// ============================================================
+
 var CommercialZones = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
     {
         layers: "SpatialDataPortalDB:metpally_plu",
@@ -166,13 +171,58 @@ var CommercialZones = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/Spa
 CommercialZones.addTo(map);
 CommercialZones.bringToFront();
 
+// ============================================================
+// Industial  Area
+// ============================================================
+
+var IndustrialZones = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+    {
+        layers: "SpatialDataPortalDB:metpally_plu",
+        CQL_FILTER: "class_m IN ('Industrial')",
+        format: "image/png",
+        transparent: true,
+        version: "1.1.1",
+        maxZoom: 25
+
+    }
+);
+IndustrialZones.addTo(map);
+IndustrialZones.bringToFront();
 
 
 
 
 
+// ============================================================
+var UrbanisableLand = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+    {
+        layers: "SpatialDataPortalDB:metpally_plu",
+        CQL_FILTER: "class_m IN ('Urbanisable Land')",
+        format: "image/png",
+        transparent: true,
+        version: "1.1.1",
+        maxZoom: 25
 
+    }
+);
+UrbanisableLand.addTo(map);
+UrbanisableLand.bringToFront();
 
+var WaterBodies = L.tileLayer.wms("http://104.233.209.179:8080/geoserver/SpatialDataPortalDB/wms",
+    {
+        layers: "SpatialDataPortalDB:metpally_plu",
+        CQL_FILTER: "class_m IN ('Water Bodies')",
+        format: "image/png",
+        transparent: true,
+        version: "1.1.1",
+        maxZoom: 25
+
+    }
+);
+WaterBodies.addTo(map);
+WaterBodies.bringToFront();
+
+// ============================================================
 
 
 
@@ -200,9 +250,28 @@ function Showlayer(icon, layerType) {
 
             break;
 
+
+        case "Indu":
+
+            layer = IndustrialZones;
+
+            break;
+
+        case "Urba":
+
+            layer = UrbanisableLand;
+
+            break;
+
+        case "Water":
+
+            layer = WaterBodies;
+
+            break;
+
         default:
 
-            return;
+            return; 
 
     }
 
@@ -273,70 +342,17 @@ function keepWMSOnTop() {
         CommercialZones.bringToFront();
         
 
-    }
+    }  
+     if (map.hasLayer(IndustrialZones)) {
+
+        IndustrialZones.bringToFront();
+        
+    
+    
 
 
 
-
-    // // State
-
-    // if (
-    //     typeof stateBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(stateBoundaryLayer)
-    // ) {
-
-    //     stateBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // District
-
-    // if (
-    //     typeof districtBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(districtBoundaryLayer)
-    // ) {
-
-    //     districtBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Mandal
-
-    // if (
-    //     typeof mandalBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(mandalBoundaryLayer)
-    // ) {
-
-    //     mandalBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Village
-
-    // if (
-    //     typeof villageBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(villageBoundaryLayer)
-    // ) {
-
-    //     villageBoundaryLayer.bringToFront();
-
-    // }
-
-
-    // // Ward
-
-    // if (
-    //     typeof WardBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(WardBoundaryLayer)
-    // ) {
-
-    //     WardBoundaryLayer.bringToFront();
-
-    // }
-
+}
 }
 
 
@@ -359,65 +375,6 @@ map.on("click", function (e) {
 
     }
 
-
-    // // ----------------------------------------
-    // // VILLAGE
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof villageBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(villageBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, villageBoundaryLayer, "metpally_ulb_boundary");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // WARD
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof WardBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(WardBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, WardBoundaryLayer, "metpally_ulb_boundary");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // MANDAL
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof mandalBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(mandalBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo( e, mandalBoundaryLayer, "SpatialDataPortalDB:metpally_plu");
-
-    // }
-
-
-    // // ----------------------------------------
-    // // DISTRICT
-    // // ----------------------------------------
-
-    // else if (
-    //     typeof districtBoundaryLayer !== "undefined" &&
-    //     map.hasLayer(districtBoundaryLayer)
-    // ) {
-
-    //     getFeatureInfo(
-    //         e,
-    //         districtBoundaryLayer,
-    //         "AdminBoundarys:District_Boundary"
-    //     );
-
-    // }
 
 
     // ----------------------------------------
@@ -484,8 +441,7 @@ function getFeatureInfo(evt, layer, layerName) {
         layers: layerName,
         query_layers: layerName,
 
-        CQL_FILTER: "class_m='Residential' OR class_m='Commercial'",
-
+        CQL_FILTER: "class_m='Residential' OR class_m='Commercial OR class_m='Industrial' OR class_m='Urbanisable Land' OR class_m='Water Bodies' ",
 
         info_format: "application/json",
         feature_count: 1,

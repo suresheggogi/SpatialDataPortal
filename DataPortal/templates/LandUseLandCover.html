@@ -51,7 +51,7 @@
                 <div class="layer-tree">
 
 <div class="LandUseLandCover" onclick="toggleTree('adminTree',this)">
-                        <i class="fa-solid fa-plus arrow"></i>
+                        <i class="fa-solid fa-minus arrow"></i>
                         <span class="name">LandUseLandCover</span>
                         <div class="iCons">
                             <i class="fa-solid fa-eye"></i>
@@ -60,7 +60,7 @@
                     </div>
 
 
-                    <div class="children" id="adminTree">
+                    <div class="children" id="adminTree" style="display:block;">
 
 
                         <div class="child" data-layer="Res">
@@ -71,37 +71,37 @@
                             </div>
                         </div>
 
-                         <div class="child" data-layer="Agri">
-                            <span>Agriculture Lands</span>
-                            <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Agri')"></i>
-                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
-                            </div>
-                        </div>
-                        <div class="child" data-layer="Indu">
-                            <span>Industrial Zones</span>
-                            <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Indu')"></i>
-                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
-                            </div>
-                        </div>
+                          <div class="child" data-layer="Agri">
+                             <span>Urbanisable Land</span>
+                             <div class="iCons">
+                                 <i class="fa-solid fa-eye" onclick="Showlayer(this,'Urba')"></i>
+                                 <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('Agri')" title="Zoom to Layer"></i>
+                             </div>
+                         </div>
+                         <div class="child" data-layer="Indu">
+                             <span>Industrial Zones</span>
+                             <div class="iCons">
+                                 <i class="fa-solid fa-eye" onclick="Showlayer(this,'Indu')"></i>
+                                 <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('Indu')" title="Zoom to Layer"></i>
+                             </div>
+                         </div>
 
-                        <div class="child" data-layer="Comm">
-                            <span>Commercial Zones</span>
-                            <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Comm')"></i>
-                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
-                            </div>
-                        </div>
+                         <div class="child" data-layer="Comm">
+                             <span>Commercial Zones</span>
+                             <div class="iCons">
+                                 <i class="fa-solid fa-eye" onclick="Showlayer(this,'Comm')"></i>
+                                 <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('Comm')" title="Zoom to Layer"></i>
+                             </div>
+                         </div>
 
-                         <div class="child" data-layer="Water">
-                            <span>Water Bodies</span>
-                            <div class="iCons">
-                                <i class="fa-solid fa-eye" onclick="Showlayer(this,'Water')"></i>
-                                <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('')" title="Zoom to Layer"></i>
-                            </div>
+                          <div class="child" data-layer="Water">
+                             <span>Water Bodies</span>
+                             <div class="iCons">
+                                 <i class="fa-solid fa-eye" onclick="Showlayer(this,'Water')"></i>
+                                 <i class="fa-solid fa-magnifying-glass-plus" onclick="zoomToLayer('Water')" title="Zoom to Layer"></i>
+                             </div>
 
-                        </div>
+                         </div>
 
                       </div>
                       
