@@ -102,15 +102,15 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     display:grid;
-    
+    width:100%;
     margin: 0%;
-    padding: 0%;
+    padding:20px;
+    box-sizing: border-box;
     grid-template-columns: 1fr 1fr;
     min-height:calc(100vh - 211px);
     grid-template-areas: "grid-container-leftbar grid-container-rightbar";
     gap:5px;
-
-    
+    font-size:20px;
 }
 .grid-container-leftbar{
     grid-area: grid-container-leftbar;
@@ -172,6 +172,8 @@ body{
 .grid-container{
     grid-template-columns:1fr;
     padding:20px;
+    box-sizing: border-box;
+    font-size:16px;
 }
 
 .Logo-container{

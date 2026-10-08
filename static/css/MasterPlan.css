@@ -19,14 +19,14 @@ body{
 .Accessibility-Toolbar a{
     color:#e3eeed;
     text-decoration:none;
-    font-size:14px; 
+    font-size:11px; 
     font-weight:100;
     transition:.3s;
     
 }
 
 .Accessibility-Toolbar a i{
-    font-size:22px; */
+    font-size:18px; 
     
 }
 
@@ -43,63 +43,59 @@ body{
 
 .header-title{
     width: 100%;
-    display: flex;
+    display: flex; 
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    /* justify-content: center; */
     height: 100px;
     background: #eff2f4;
     position: fixed;
     top: 46px;
     padding: 0 20px;
     box-sizing: border-box;
-    position: fixed;
     z-index: 999;
     
 }
 
 .Logo-container{
-    position: fixed;
-    left: 20px;
+    /* display: flex; */
     align-items: center;
-    position: fixed;
-    z-index: 999;
 }
+
 .Telangana_logo{
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
+    width:clamp(60px,6vw,90px);
+    height:auto;
     border-radius: 50px;
 
 }
+
 .header-title h1{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
-    font-size: 35px;
-    margin: 0;
+    font-size: 30px;
+    margin-left: 35%;
     text-align: center;
 }
 .Navigationbar-container {
     width: 100%;
-    height: 70px;
+    box-sizing: border-box;
     position: fixed;
-    top: 146px;  
-    left: 0;
-    z-index: 997;
-}
-
+    top: 140px;
+    z-index: 998;
+    }
 .Navigationbar-items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
     background:#d3d2d7;
+    /* font-size:clamp(23px,1vw,18px); */
     font-size: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 10px;
     box-sizing: border-box;
+    position: relative;
     z-index: 995;
-    
 }
 .Navigationbar-items a{
     padding: 15px;
@@ -118,7 +114,7 @@ body{
     width: 100%;
     display: flex;
     /* position: fixed; */
-    padding-top: 216px;
+    padding-top: 213px;
     box-sizing: border-box;
     min-height:calc(100vh - 450px);
 }
@@ -323,3 +319,4 @@ input[type="radio"] {
 #map,.leaflet-container {
     background: #ffffff ;
 }
+
